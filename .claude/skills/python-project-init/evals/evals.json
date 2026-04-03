@@ -1,0 +1,23 @@
+{
+  "skill_name": "python-project-init",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "社内で使うユーティリティライブラリを作りたい。名前は「common-utils」で。Pythonプロジェクトを初期化して。",
+      "expected_output": "src/common_utils/ 構成のライブラリプロジェクトが生成される。pyproject.toml、Dockerfile、docker-compose.yaml、.gitignore、start.sh、README.md、py.typed、tests/が含まれる。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "新しいAPIサーバーを作りたい。プロジェクト名は「task-api」。FastAPIで。",
+      "expected_output": "app/ 構成のバックエンドプロジェクトが生成される。FastAPI・uvicornが依存に含まれ、health.pyエンドポイント、ポート8000のdocker-compose、Swagger UIが使える状態。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "ファイル変換用のCLIツールを作って。プロジェクト名は「file-converter」。",
+      "expected_output": "src/file_converter/ 構成のCLIプロジェクトが生成される。argparseベースのcli.py、__main__.py、project.scriptsエントリーポイントが設定される。",
+      "files": []
+    }
+  ]
+}
