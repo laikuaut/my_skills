@@ -1,10 +1,10 @@
 {
-  "enabledPlugins": {
-    "skill-creator@claude-plugins-official": true
-  },
   "permissions": {
     "allow": [
       "Bash(*)"
     ]
+  },
+  "enabledPlugins": {
+    "skill-creator@claude-plugins-official": true
   }
 }
