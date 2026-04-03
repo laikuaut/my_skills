@@ -1,0 +1,34 @@
+{
+  "skill_name": "openapi-docs",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "openapi-docs-workspace/test-apps/fastapi-app にあるFastAPIのタスク管理APIからOpenAPIドキュメントを生成して",
+      "expected_output": "OpenAPI 3.1準拠のYAMLファイル。5つのCRUDエンドポイント、Pydanticモデルからのスキーマ定義、Bearer認証の定義を含む",
+      "files": [
+        "openapi-docs-workspace/test-apps/fastapi-app/main.py",
+        "openapi-docs-workspace/test-apps/fastapi-app/pyproject.toml"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "openapi-docs-workspace/test-apps/express-app のExpressの書籍管理APIのOpenAPIドキュメントを作ってほしい",
+      "expected_output": "OpenAPI 3.1準拠のYAMLファイル。6つのエンドポイント、Zodスキーマからの型定義、Bearer認証、クエリパラメータ（ソート・フィルタ）を含む",
+      "files": [
+        "openapi-docs-workspace/test-apps/express-app/src/app.ts",
+        "openapi-docs-workspace/test-apps/express-app/src/routes/books.ts",
+        "openapi-docs-workspace/test-apps/express-app/src/middleware/auth.ts",
+        "openapi-docs-workspace/test-apps/express-app/package.json"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "openapi-docs-workspace/test-apps/gin-app にあるGo/Ginの商品カタログAPIのAPIドキュメントをOpenAPI形式で生成して",
+      "expected_output": "OpenAPI 3.1準拠のYAMLファイル。6つのエンドポイント、Go structからのスキーマ定義、API Key認証（X-API-Keyヘッダー）、カテゴリのenum定義を含む",
+      "files": [
+        "openapi-docs-workspace/test-apps/gin-app/main.go",
+        "openapi-docs-workspace/test-apps/gin-app/go.mod"
+      ]
+    }
+  ]
+}
