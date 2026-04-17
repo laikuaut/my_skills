@@ -1,11 +1,9 @@
 ---
 name: react-project-init
 description: |
-  Reactプロジェクトの初期構築スキル。Vite・TypeScript・Tailwind CSS・ESLint・Prettier・Vitest・Dockerを含むプロジェクト雛形を生成する。
-  SPA・ダッシュボード・ランディングページなど用途に応じた構成に対応。
-  「Reactプロジェクトを作って」「Viteで新規プロジェクト」「フロントエンドの雛形」「SPAを作りたい」
-  「Reactアプリ作成」「ダッシュボード作りたい」「TypeScript+Reactで始めたい」「Tailwind使って画面作りたい」
-  などReact/フロントエンドプロジェクトの新規作成を求められたときに使用する。既存コードの編集には使わない。
+  Reactプロジェクト雛形を新規生成するスキル。Vite + TypeScript + Tailwind + ESLint/Prettier + Vitest が共通仕様、spa / dashboard の2タイプから選択する。Docker(nginx)はオプション。
+  使用するケース: 「Reactプロジェクトを作って」「Viteで新規プロジェクト」「フロントエンドの雛形」「SPAを作りたい」「ダッシュボード作りたい」「TypeScript+Reactで始めたい」「Tailwind使って画面作りたい」など、空ディレクトリからのスケルトン作成。
+  使わないケース: 既存プロジェクト内でのコンポーネント作成・編集（react-impl を使う）、依存追加だけ、画面追加・実装変更。
 ---
 
 # React Project Init
@@ -194,7 +192,9 @@ import "@testing-library/jest-dom";
 }
 ```
 
-### Step 7: Dockerfile（マルチステージビルド）
+### Step 7: Dockerfile（マルチステージビルド、オプション）
+
+> Docker(nginx) はオプション。ユーザが「Dockerで動かしたい」「Dockerfile欲しい」と明示した場合のみStep 7-9を実行する。`npm run dev`での開発が前提なら省略してよい。
 
 ```dockerfile
 FROM node:22-slim AS builder
@@ -301,7 +301,31 @@ export const useCounterStore = create<CounterState>((set) => ({
 
 ### Step 13: App.tsxの置き換え
 
-Viteが生成するApp.tsxを、Tailwind CSSとZustandを使ったシンプルな内容に置き換える。具体的な内容はタイプ別リファレンスで定義する。
+Viteが生成するApp.tsxを、Tailwind CSSとZustandを使ったシンプルな内容に置き換える。タイプ別リファレンスにフルテンプレートがあるが、基本テンプレートは以下:
+
+```tsx
+import { useCounterStore } from "@/stores/useCounterStore";
+
+function App() {
+  const { count, increment, decrement, reset } = useCounterStore();
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="rounded-lg border bg-white p-8 shadow-sm">
+        <h1 className="mb-4 text-2xl font-bold">Counter</h1>
+        <p className="mb-6 text-center text-4xl font-mono">{count}</p>
+        <div className="flex gap-2">
+          <button onClick={decrement} className="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300">-</button>
+          <button onClick={reset} className="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300">Reset</button>
+          <button onClick={increment} className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">+</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+```
 
 ### Step 14: サンプルテスト
 

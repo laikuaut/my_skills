@@ -1,12 +1,11 @@
 ---
 name: playwright-test
 description: |
-  画面仕様書とフロントエンド実装からPlaywrightのE2Eテストケースを網羅的に生成し、テスト実行・バグ修正まで行うスキル。
-  画面仕様書（Markdown）がある場合はそこからテストケースを導出し、なければ実装コードから直接テストを生成する。
-  「E2Eテストを書いて」「Playwrightテスト作って」「画面テスト」「結合テスト」「ブラウザテスト」
-  「画面仕様書からテストを作って」「テストケースを網羅して」「テストして直して」「テスト実行してバグ修正」
-  「playwright」「e2e」「エンドツーエンド」などテスト作成・実行に関する指示があったときにこのスキルを使用すること。
-  単体テスト（Vitest/Jest）の場合は使わない。ブラウザ上での画面操作テストに特化する。
+  PlaywrightのE2Eテストを「網羅的に生成→実行→失敗解析→バグ修正→再実行」までワンストップで行うスキル。
+  入力源: 画面仕様書（docs/screens/*.md）がある場合はUC-Nから導出、なければ実装コード（ルーティング・フォーム・API呼び出し）から直接生成。
+  使用するケース: 「E2Eテスト書いて」「Playwrightテスト作って」「画面テスト」「結合テスト」「ブラウザテスト」「テスト実行してバグ修正」「playwright/e2e/エンドツーエンド」など。
+  使わないケース: 単体テスト（Vitest/Jest）、APIのみのテスト（rest-api-testを使う）、Cypress等の他フレームワーク。
+  特徴: getByRole/getByLabel優先、page.routeでAPIモック、waitForTimeout禁止、テスト間依存禁止。
 ---
 
 # Playwright E2Eテスト生成・実行スキル
@@ -26,23 +25,13 @@ description: |
 
 ## Step 1: 環境確認
 
-### Playwrightセットアップの確認
-
-```bash
-# package.jsonにplaywrightがあるか確認
-cat package.json | grep -i playwright
-
-# playwright.config.tsが存在するか
-ls playwright.config.ts 2>/dev/null || ls playwright.config.js 2>/dev/null
-```
-
-### 未セットアップの場合
+`playwright.config.ts` (or `.js`) が存在するか確認。なければ以下で初期化:
 
 ```bash
 npm init playwright@latest -- --yes --quiet
 ```
 
-生成される`playwright.config.ts`で以下を確認・調整する:
+`playwright.config.ts` で以下を確認・調整する（既存設定があれば尊重）:
 - `baseURL`: 開発サーバのURL（通常`http://localhost:3000`）
 - `webServer`: 開発サーバの自動起動設定
 - `projects`: テスト対象ブラウザ（初期は`chromium`のみで十分）

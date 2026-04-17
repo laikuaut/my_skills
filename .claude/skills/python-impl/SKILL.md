@@ -1,10 +1,10 @@
 ---
 name: python-impl
 description: |
-  Python実装の品質基準を適用するスキル。新規Pythonコードの作成・既存コードのリファクタリング時に使用する。
-  Google Styleドキュメント、タイプヒント、ruffによるlint/format、isortによるimport整理、適切なクラス設計・ファイル分割・ログ設計を自動的に適用する。
-  Pythonファイルの作成・編集・リファクタリング・レビューを依頼されたとき、Pythonプロジェクトの新規構築を依頼されたとき、
-  「Pythonで実装して」「PEP8準拠で」「型ヒントつけて」「docstring書いて」「リファクタリングして」などの指示があったときにこのスキルを使用すること。
+  Pythonコードの実装品質基準（Google Style docstring・型ヒント・ruff lint/format・クラス設計・ファイル分割）を自動適用するスキル。既存プロジェクト内でのコード作成・編集・リファクタリングが対象。
+  使用するケース: 「Pythonで実装して」「型ヒントつけて」「docstring書いて」「リファクタリングして」「PEP8準拠で」「ruffで整えて」など、Pythonコードの作成・改修依頼。
+  使わないケース: プロジェクト新規作成（python-project-initを使う）、Pythonの実行・デバッグだけ、テストの実行のみ。
+  FastAPI実装やログ設計の詳細は references/fastapi_guide.md / references/logging_guide.md に分離（必要時のみ参照）。
 ---
 
 # Python実装スキル
@@ -322,36 +322,34 @@ async def retry_async(
     raise last_exception  # type: ignore[misc]
 ```
 
-### 10. ログ設計（大規模プロジェクト向け）
+### 10. ログ設計
 
-大規模プロジェクト（10ファイル以上、またはユーザーが明示的に求めた場合）では、ログ設計を行う。
+標準`logging`モジュールを使う。基本原則:
 
-詳細は `references/logging_guide.md` を参照すること。
+- ロガーは`__name__`で取得: `logger = logging.getLogger(__name__)`
+- f-string でなく `%s` プレースホルダで渡す（フォーマットコストの遅延評価のため）
+- 例外時は `logger.exception()` でスタックトレースを残す
+- 個人情報・パスワード・トークンはログに出さない
 
-### 11. FastAPI実装（API開発時）
-
-FastAPIを使う場合、バリデーションとSwagger UIドキュメントを必須とする。
-
-詳細は `references/fastapi_guide.md` を参照すること。
-
-**基本原則**:
-- 標準`logging`モジュールを使う
-- ロガーは`__name__`で取得（`logger = logging.getLogger(__name__)`）
-- ログレベルを正しく使い分ける
-- 構造化ログ（JSON形式）を本番環境で使う
+ログレベルの使い分け:
 
 ```python
 import logging
 
 logger = logging.getLogger(__name__)
 
-# レベルの使い分け
-logger.debug("クエリ実行: %s params=%s", query, params)       # 開発時のみ
-logger.info("ユーザー登録完了: user_id=%s", user.id)           # 正常な業務イベント
-logger.warning("APIレート制限に接近: remaining=%d", remaining) # 注意が必要
-logger.error("決済処理失敗: order_id=%s error=%s", order_id, e)  # エラーだが継続可能
-logger.critical("DB接続不可: %s", connection_string)           # システム停止レベル
+logger.debug("クエリ実行: %s params=%s", query, params)        # 開発時のみ
+logger.info("ユーザー登録完了: user_id=%s", user.id)            # 正常な業務イベント
+logger.warning("APIレート制限に接近: remaining=%d", remaining)  # 注意が必要
+logger.error("決済処理失敗: order_id=%s error=%s", order_id, e) # エラーだが継続可能
+logger.critical("DB接続不可: %s", connection_string)            # システム停止レベル
 ```
+
+複数チーム・マイクロサービス・本番運用が前提のプロジェクトでは構造化ログ（JSON形式）・ハンドラ設定・相関IDなどが必要になる。詳細は `references/logging_guide.md` を参照する。
+
+### 11. FastAPI実装（API開発時）
+
+FastAPIを使う場合は、バリデーション（Pydantic Field）と Swagger UI ドキュメントを必須とする。詳細とテンプレートは `references/fastapi_guide.md` を参照する。
 
 ## リファクタリング
 

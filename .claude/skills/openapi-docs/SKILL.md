@@ -1,16 +1,11 @@
 ---
 name: openapi-docs
 description: |
-  バックエンドの実装コード（ルーター定義・コントローラー・モデル/スキーマ）を解析し、
-  OpenAPI 3.1準拠のAPIドキュメントをYAML形式で自動生成するスキル。
-  FastAPI, Express, Hono, NestJS, Gin, Echo, Spring Bootなど主要フレームワークに対応。
-  Pydantic, Zod, Go structタグ, DTOクラスからスキーマ定義・バリデーション制約・enum値を抽出し、
-  Bearer/API Key/OAuth2などの認証方式も自動検出してsecuritySchemesに反映する。
-  このスキルはAPIドキュメント生成に関する依頼全般で使用する:
-  「APIドキュメントを作って」「OpenAPIを生成して」「Swagger定義を書いて」「エンドポイント一覧をまとめて」
-  「REST APIの仕様書を作りたい」「openapi.yamlを更新して」「API仕様書をyamlで出力して」など。
-  既存のopenapi.yamlの差分更新にも対応する。バックエンドのコードからAPI仕様を生成・更新する
-  タスクであれば、フレームワークや言語を問わず積極的にこのスキルを使用すること。
+  バックエンド実装コードからOpenAPI 3.1準拠のYAMLドキュメントを生成・更新するスキル。スタンドアロンで使えるし、fullstack-pipelineの一部としても呼ばれる。
+  対応フレームワーク: FastAPI / Express / Hono / NestJS / Gin / Echo / Spring Boot。Pydantic・Zod・struct tag・DTOからスキーマ抽出、認証方式（Bearer/APIKey/OAuth2）も自動検出する。
+  使用するケース: 「APIドキュメントを作って」「OpenAPIを生成」「Swagger定義を書いて」「openapi.yamlを更新」「エンドポイント一覧をまとめて」など、コードからAPI仕様を生成・更新する依頼全般。
+  使わないケース: ドキュメントから実装を生成する逆方向の作業、AsyncAPI/GraphQL等のREST以外のAPI、手動で書かれた仕様書のレビューのみ。
+  既存openapi.yamlがある場合は差分更新し、手書きされたdescription/exampleは保持する。
 ---
 
 # OpenAPI Document Generator

@@ -1,12 +1,9 @@
 ---
 name: react-impl
 description: |
-  React + TypeScript実装の品質基準を適用するスキル。新規React/TSXコードの作成・既存コードのリファクタリング時に使用する。
-  TSDoc、厳密な型定義、ESLint + Prettier、コンポーネント設計、カスタムフック抽出、テスト設計を自動的に適用する。
-  Reactコンポーネントの作成・編集・リファクタリング・レビューを依頼されたとき、
-  「Reactで実装して」「コンポーネント作って」「TSXを書いて」「リファクタリングして」「フック作って」「TypeScriptで型つけて」
-  などReact/TypeScriptの実装に関する指示があったときにこのスキルを使用すること。
-  react-project-initとは異なり、既存プロジェクト内でのコード実装に適用する。プロジェクト新規作成には使わない。
+  React + TypeScriptコードの実装品質基準（TSDoc・厳密な型定義・コンポーネント分割50行・カスタムフック抽出・Tailwind/clsx）を自動適用するスキル。既存プロジェクト内でのコード作成・編集・リファクタリングが対象。
+  使用するケース: 「Reactで実装して」「コンポーネント作って」「TSXを書いて」「フック作って」「TypeScriptで型つけて」「リファクタリングして」など、コンポーネント・フック・ユーティリティの作成/改修依頼。
+  使わないケース: プロジェクト新規作成（react-project-initを使う）、E2Eテスト作成（playwright-testを使う）、Vue/Svelte等の他フレームワーク、CSS-in-JSの大規模導入。
 ---
 
 # React実装スキル
@@ -107,25 +104,24 @@ type AsyncState<T> =
 
 ### 4. Import順序
 
-```tsx
-// 1. React本体
-import { useState, useCallback, useMemo } from "react";
+外部 → 内部 → 相対パス、の順に並べる。`type`インポートは `import type` で値インポートと分離する。
 
-// 2. サードパーティライブラリ
+```tsx
+// 外部（React/サードパーティ）
+import { useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 
-// 3. プロジェクト内の共通モジュール（エイリアス `@/` 使用）
+// 内部（エイリアス `@/`）
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/hooks/useAuth";
 import type { User } from "@/types/user";
 
-// 4. 相対パスのローカルモジュール
+// 相対パス
 import { ProfileAvatar } from "./ProfileAvatar";
-import { useProfileForm } from "./useProfileForm";
 ```
 
-グループ間は1行空行。グループ内はアルファベット順。`type`インポートは通常のインポートと分離する（`import type`）。
+グループ間は1行空行。並び順はESLint (`eslint-plugin-import` または `simple-import-sort`) に任せる。
 
 ### 5. Lint・Format（ESLint + Prettier）
 
