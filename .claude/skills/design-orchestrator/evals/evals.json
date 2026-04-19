@@ -1,0 +1,78 @@
+{
+  "skill_name": "design-orchestrator",
+  "description": "トリガー精度テスト。発火すべきケースと、他スキル優先で発火してはいけないケースを対にして検証する。",
+  "evals": [
+    {
+      "id": "T-01",
+      "prompt": "このアプリを設計して",
+      "should_trigger": true,
+      "expected_output": "design-orchestrator が起動し、Phase 0 の輪郭質問（プロダクト概要・想定ユーザー・最優先価値）から開始する"
+    },
+    {
+      "id": "T-02",
+      "prompt": "要求整理お願い",
+      "should_trigger": true,
+      "expected_output": "design-orchestrator が起動し、AskUserQuestion で要求を段階確定していく"
+    },
+    {
+      "id": "T-03",
+      "prompt": "設計計画を立てて",
+      "should_trigger": true,
+      "expected_output": "design-orchestrator が起動し、requirements.md を前提として design-plan.md の進捗サマリを作成する"
+    },
+    {
+      "id": "T-04",
+      "prompt": "新規プロダクトの設計をしたい。TODOアプリを作る予定",
+      "should_trigger": true,
+      "expected_output": "design-orchestrator が起動、プロダクトの輪郭確認から始める"
+    },
+    {
+      "id": "T-05",
+      "prompt": "このバグ直して。タスク一覧の並び順がおかしい",
+      "should_trigger": false,
+      "expected_output": "design-orchestrator は起動しない（単発バグ修正は python-impl / react-impl 領域）"
+    },
+    {
+      "id": "T-06",
+      "prompt": "Pythonで実装して。Fibonacciを計算する関数",
+      "should_trigger": false,
+      "expected_output": "python-impl が起動。design-orchestrator は発火しない"
+    },
+    {
+      "id": "T-07",
+      "prompt": "OpenAPIを生成して。backend/ のコードから",
+      "should_trigger": false,
+      "expected_output": "openapi-docs が起動。design-orchestrator は発火しない"
+    },
+    {
+      "id": "T-08",
+      "prompt": "画面モック作って。ログイン画面のUI",
+      "should_trigger": false,
+      "expected_output": "frontend-design が起動。design-orchestrator は発火しない"
+    },
+    {
+      "id": "T-09",
+      "prompt": "E2Eテスト書いて。ログインからタスク作成まで",
+      "should_trigger": false,
+      "expected_output": "playwright-test が起動。design-orchestrator は発火しない"
+    },
+    {
+      "id": "T-10",
+      "prompt": "コミットして。変更をまとめて日本語メッセージで",
+      "should_trigger": false,
+      "expected_output": "git-commit-push が起動。design-orchestrator は発火しない"
+    },
+    {
+      "id": "T-11",
+      "prompt": "要求仕様を書いて。メモアプリを作りたい",
+      "should_trigger": true,
+      "expected_output": "design-orchestrator が起動、Phase 1 の要求整理から始める"
+    },
+    {
+      "id": "T-12",
+      "prompt": "設計フェーズを進めて。要求は docs/requirements.md にある",
+      "should_trigger": true,
+      "expected_output": "design-orchestrator が起動、既存 requirements.md を前提に Phase 2 以降へ進む"
+    }
+  ]
+}
