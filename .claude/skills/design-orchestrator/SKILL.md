@@ -1,10 +1,10 @@
 ---
 name: design-orchestrator
 description: |
-  新規プロダクトの要求整理から論理設計完了までをオーケストレーションするスキル。要求仕様（requirements.md）→ 設計計画（design-plan.md）→ 設計書本編（concept/architecture/data-layer/state-management/error-handling/api-detail/schemas/openapi/mcp-spec）→ 画面仕様書（暫定）の順に、テンプレートと進捗管理を提供する。
-  使用するケース: 「設計して」「要求をまとめて」「設計フェーズ」「設計計画を立てて」「新規プロダクトの設計」「要求整理」「要求仕様を書いて」など、実装着手前の論理設計フェーズをまとめて進めたい指示全般。
-  使わないケース: 実装そのもの（fullstack-pipeline / python-impl / react-impl を使う）、プロジェクト雛形生成（python-project-init / react-project-init）、画面モック作成（frontend-design プラグイン）、OpenAPI自動生成（openapi-docs）、E2Eテスト（playwright-test）、単発のバグ修正・リファクタリング。
-  特徴: AskUserQuestion で要求を段階的に確定 / 設計ドキュメント13本のテンプレと依存関係を提供 / 各タスク完了時に design-plan.md と design/README.md を自動更新 / セッション分割の判定支援 / git-commit-push と連携して区切りごとにコミット。本スキルは手順管理に特化し、実装・雛形生成・テスト生成の詳細は各専門スキルに委譲する。
+  新規プロダクト/新機能の実装着手前の「要求整理 → 設計書一式作成」をオーケストレーションするスキル。requirements.md → design-plan.md → docs/design/ 配下の設計書13本（concept / tokens / components / architecture / data-layer / state-management / error-handling / api-detail / schemas / mcp-spec など）→ openapi.yaml ドラフト → 画面仕様書暫定版 の順に、テンプレと進捗管理付きで段階構築する。
+  使用するケース: 「設計して」「設計フェーズ進めて」「設計計画立てて」「要求整理」「要件ヒアリング」「要求仕様書書いて」「新規プロダクトの設計」「新機能の設計」「キックオフの設計段取り」「実装前に設計書そろえたい」「docs/design 整備」「concept.md / architecture.md / api-detail.md 書きたい」など、コードを書き始める前の論理設計段階を進めたい依頼全般。要求が曖昧でも AskUserQuestion で段階確定するので、ふんわりした相談でも発火してよい。
+  使わないケース: コード実装（fullstack-pipeline / python-impl / react-impl を使う）、プロジェクト雛形生成（python-project-init / react-project-init）、画面モックやビジュアル UI 制作（frontend-design プラグイン）、実装コードからの OpenAPI 自動生成（openapi-docs）、E2E テスト（playwright-test）、既存コードのバグ修正・リファクタリング、既存設計書の単なるレビュー。
+  特徴: AskUserQuestion で要求を段階確定 / 設計ドキュメント13本のテンプレと依存関係を提供 / タスク完了時に design-plan.md と design/README.md を自動更新 / セッション分割の判定支援 / git-commit-push と連携して区切りごとにコミット。実装・雛形生成・テスト生成の詳細は各専門スキルに委譲する。
 ---
 
 # 論理設計フェーズ オーケストレータ
