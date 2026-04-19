@@ -8,6 +8,8 @@ Claude Code用カスタムスキル / エージェントの管理リポジトリ
 
 | スキル | 説明 |
 |---|---|
+| [task-orchestrator](.claude/skills/task-orchestrator/) | 最上位メタ制御。計画（design-plan.md / tasks.md / 会話履歴）に沿って子スキルを選んで起動、並列判定、セッション限界で handoff.md と次セッション起動プロンプトを生成 |
+| [design-orchestrator](.claude/skills/design-orchestrator/) | 論理設計フェーズの指揮。requirements → design-plan → design/ 配下 13 本 → openapi.yaml → screens の順にテンプレ付きで段階構築 |
 | [fullstack-pipeline](.claude/skills/fullstack-pipeline/) | FastAPI + React のフルスタック開発を一気通貫で進める手順管理。各フェーズは個別スキルへ委譲 |
 
 ### 実装品質基準
